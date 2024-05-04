@@ -4,9 +4,10 @@ const auth = require("../middleware/auth")
 
 const notesRoute= Router()
 
-notesRoute.get("/",async(req,res)=>{
+notesRoute.get("/",auth,async(req,res)=>{
+    const {userId}= req.body;
     try {
-        const notes = await notesModel.find()
+        const notes = await notesModel.find({userId})
         res.send(notes)
     } catch (error) {
         res.status(501).send(error)
